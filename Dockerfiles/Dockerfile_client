@@ -6,8 +6,15 @@ FROM node:20 AS build
 WORKDIR /client
 
 # Clone the repository
-RUN git clone https://loic-hpp:glpat-v9Qt8vbw2zoY-stynsRH@gitlab.com/polytechnique-montr-al/inf3995/20243/equipe-107/geppetto.git
-RUN cd geppetto/client
+RUN git clone https://loic-hpp:glpat-v9Qt8vbw2zoY-stynsRH@gitlab.com/polytechnique-montr-al/inf3995/20243/equipe-107/geppetto.git\
+    && cd geppetto\
+    && git checkout develop\
+    && git pull
+
+WORKDIR /client/geppetto/client
+
+# Install Angular CLI
+RUN npm install -g @angular/cli
 
 # Install dependencies
 RUN npm ci
@@ -16,4 +23,4 @@ RUN npm ci
 EXPOSE 4200
 
 # Start the app
-CMD ["npm", "start"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
