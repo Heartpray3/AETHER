@@ -11,7 +11,7 @@ RUN git clone https://loic-hpp:glpat-v9Qt8vbw2zoY-stynsRH@gitlab.com/polytechniq
     && git checkout develop\
     && git pull
 
-WORKDIR /client/geppetto/client
+WORKDIR /client/geppetto/application/client
 
 # Install Angular CLI
 RUN npm install -g @angular/cli
