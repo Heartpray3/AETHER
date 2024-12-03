@@ -10,4 +10,5 @@ export enum TopicType {
     update_code = 'common_msgs/msg/UpdateControllerCode',
     pose = 'geometry_msgs/msg/Pose',
     pose_with_distance = 'common_msgs/msg/PoseWithDistance',
+    geofence = 'common_msgs/msg/GeofenceBounds'
 }

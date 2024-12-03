@@ -3,6 +3,8 @@ import { RobotCommunicationService } from '@app/services/robot-communication/rob
 import { OccupancyGrid, MapMetaData } from '@common/interfaces/LiveMap';
 import { collapseExpandAnimation } from 'src/assets/CollapseExpand';
 import { RobotPose } from '@common/interfaces/RobotPoseWithDistance';
+import { GeofenceService } from '@app/services/geofence/geofence.service';
+import { GeofenceCoord } from '@common/types/GeofenceCoord';
 
 const ROBOT_RADIUS = 5;
 const ROBOT_START_ANGLE = 0;
@@ -29,12 +31,17 @@ export class MapDisplayComponent implements OnInit {
     private robotPoses: { [topic: string]: RobotPose[] } = {};
     private topicColors: { [key: string]: string } = {};
     private occupancyGridInfo: MapMetaData;
+    private geofence: GeofenceCoord | null = null;
 
-    constructor(private robotCommunicationService: RobotCommunicationService) {}
+    constructor(
+        private robotCommunicationService: RobotCommunicationService,
+        private geofenceService: GeofenceService
+    ) {}
 
     ngOnInit(): void {
         this.subscribeToLiveMap();
         this.subscribeToRobotPositions();
+        this.subscribeToGeofence();
     }
 
     toggleCollapse() {
@@ -43,6 +50,7 @@ export class MapDisplayComponent implements OnInit {
 
     private subscribeToLiveMap(): void {
         if (this.map) {
+            this.occupancyGridInfo = this.map.info;
             this.drawMap(this.map);
         } else {
             this.robotCommunicationService.onLiveMap().subscribe((occupancyGrid: OccupancyGrid) => {
@@ -61,23 +69,33 @@ export class MapDisplayComponent implements OnInit {
         });
     }
 
+    private subscribeToGeofence(): void {
+        this.geofenceService.geofence$.subscribe((geofence) => {
+            this.geofence = geofence;
+            this.drawMap(this.map);
+        });
+    }
+
     private drawMap(occupancyGrid: OccupancyGrid): void {
+        if (!this.occupancyGridInfo || !occupancyGrid.data) return;
         const canvas = this.mapCanvas.nativeElement;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
-
         this.setCanvasDimensions(canvas);
         this.drawOccupancyGrid(ctx, occupancyGrid);
         this.drawRobotPositions();
+        this.drawGeofence(ctx);
     }
 
     private setCanvasDimensions(canvas: HTMLCanvasElement): void {
+        if (!this.occupancyGridInfo) return;
         const { width, height } = this.occupancyGridInfo;
         canvas.width = width;
         canvas.height = height;
     }
 
     private drawOccupancyGrid(ctx: CanvasRenderingContext2D, occupancyGrid: OccupancyGrid): void {
+        if (!this.occupancyGridInfo || !occupancyGrid.data) return;
         const { width, height } = this.occupancyGridInfo;
 
         for (let y = 0; y < height; y++) {
@@ -145,6 +163,20 @@ export class MapDisplayComponent implements OnInit {
 
     private quaternionToAngle(q: { x: number, y: number, z: number, w: number }): number {
         return Math.atan2(2.0 * (q.w * q.z + q.x * q.y), 1.0 - 2.0 * (q.y * q.y + q.z * q.z));
+    }
+
+    private drawGeofence(ctx: CanvasRenderingContext2D): void {
+        if (!this.geofence || !this.occupancyGridInfo) return;
+
+        const { origin, resolution } = this.occupancyGridInfo;
+        const canvasHeight = this.mapCanvas.nativeElement.height;
+
+        const bottomLeft = this.calculateRobotPosition({ x: this.geofence.x_max, y: this.geofence.y_min }, origin, resolution, canvasHeight);
+        const topRight = this.calculateRobotPosition({ x: this.geofence.x_min, y: this.geofence.y_max }, origin, resolution, canvasHeight);
+
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(bottomLeft.x, topRight.y, topRight.x - bottomLeft.x, bottomLeft.y - topRight.y);
     }
 
     getColorForTopic(topic: string): string {

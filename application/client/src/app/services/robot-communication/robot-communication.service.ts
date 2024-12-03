@@ -16,6 +16,8 @@ import { RobotStatus } from '@common/interfaces/RobotStatus';
 import { LogMessage } from '@common/interfaces/LogMessage';
 import { OccupancyGrid } from '@common/interfaces/LiveMap';
 import { RobotPose } from '@common/interfaces/RobotPoseWithDistance';
+import { SetGeofence } from '@common/interfaces/SetGeofence';
+import { GeofenceCoord } from '@common/types/GeofenceCoord';
 
 @Injectable({
     providedIn: 'root',
@@ -60,7 +62,6 @@ export class RobotCommunicationService {
 
     handleConnect() {
         this.socketService.on('connect', () => {
-            console.log('WebSocket connection established');
             this.connectionStatusSubject.next(true);
         });
     }
@@ -104,7 +105,6 @@ export class RobotCommunicationService {
 
     handleDisconnect() {
         this.socketService.on('disconnect', () => {
-            console.log('WebSocket connection lost');
             this.connectionStatusSubject.next(false);
         });
     }
@@ -244,6 +244,15 @@ export class RobotCommunicationService {
             target,
         };
         this.socketService.send(RobotCommand.IdentifyRobot, message);
+    }
+
+    setGeofence(coords: GeofenceCoord): void {
+        const message: SetGeofence = {
+            command: RobotCommand.SetGeofence,
+            geofence_coordinates: coords,
+            timestamp: new Date().toISOString(),
+        };
+        this.socketService.send(RobotCommand.SetGeofence, message);
     }
 
     onMessage(eventName: string): Observable<unknown> {
