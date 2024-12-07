@@ -65,7 +65,7 @@ Contact "loic8558" and/or "velistic" on Discord for help or questions regarding 
 
 ## Authors and acknowledgment
 
-Project Authors: Ely Cheikh Abyss, Omar Benzekri, Abdul-Wahab Chaarani, Loïc Nguemegne, Thomas Rouleau and Ivan Samoylenko
+Project Authors: Ely Cheikh Abass, Omar Benzekri, Abdul-Wahab Chaarani, Loïc Nguemegne, Thomas Rouleau and Ivan Samoylenko
 
 Project made possible with help of Antoine Robillard, Mark Bong, Guillaume Ricard and Benjamin De Leener
 
