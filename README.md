@@ -1,4 +1,4 @@
-# AETHER: Multi-Robot Exploration System
+# AETHER: Autonomous Exploration Terrain for Hazardous Environments Robots
 
 ![Project Banner](./assets/banner.png)
 
