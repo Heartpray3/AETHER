@@ -1,4 +1,4 @@
-# ROBO-QUEST: Multi-Robot Exploration System
+# AETHER: Multi-Robot Exploration System
 
 ![Project Banner](./assets/banner.png)
 
@@ -31,7 +31,7 @@
 ---
 
 ## Project Overview
-**ROBO-QUEST** is a proof-of-concept project demonstrating a multi-robot exploration system capable of autonomously navigating and mapping unknown environments. Designed for research and educational purposes in space exploration, this system complies with the minimum sensor requirements of the Canadian Space Agency (CSA). The system enables real-time monitoring, control, and debugging through an interactive web interface.
+**AETHER** is a proof-of-concept project demonstrating a multi-robot exploration system capable of autonomously navigating and mapping unknown environments. Designed for research and educational purposes in space exploration, this system complies with the minimum sensor requirements of the Canadian Space Agency (CSA). The system enables real-time monitoring, control, and debugging through an interactive web interface.
 
 Key features include:
 - Real-time mapping of the exploration zone.
@@ -64,14 +64,14 @@ The project integrates several advanced technologies:
 ### Setup Instructions
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-repo/ROBO-QUEST.git
-   cd ROBO-QUEST
+   git clone https://github.com/Heartpray3/AETHER.git
+   cd AETHER
    ```
 
 2. **Start Services**:
    Run the following script to start the system:
    ```bash
-   ./start.sh
+   ./launch/start.sh
    ```
 
 3. **Access the Interface**:
@@ -90,7 +90,7 @@ The project integrates several advanced technologies:
 
 ## Robots: Agilex LIMO
 
-The **Agilex LIMO robots** serve as the core of the ROBO-QUEST system, delivering a versatile and reliable platform for autonomous exploration. These robots are lightweight, agile, and equipped with advanced features tailored for both indoor and outdoor operations.
+The **Agilex LIMO robots** serve as the core of the AETHER system, delivering a versatile and reliable platform for autonomous exploration. These robots are lightweight, agile, and equipped with advanced features tailored for both indoor and outdoor operations.
 
 <div style="display: flex; justify-content: space-between;">
    <img src="./assets/agilex-limo.png" alt="AgileX Limo" style="width: 45%;">
@@ -103,12 +103,12 @@ The **Agilex LIMO robots** serve as the core of the ROBO-QUEST system, deliverin
 - **Built-in Sensors**: Includes LiDAR, cameras, and IMUs, ensuring comprehensive perception and obstacle avoidance capabilities.
 - **Customizable**: Fully programmable via ROS2, allowing seamless integration with the exploration algorithms and custom mission requirements.
 
-### Role in ROBO-QUEST:
+### Role in AETHER:
 - **Autonomous Navigation**: The LIMO robots navigate and map unknown environments autonomously using the integrated ROS2 navigation stack.
 - **P2P Communication**: Robots communicate and collaborate in real time to optimize exploration and share mapping data.
 - **Real-World Testing**: The robust design and reliable sensors make the LIMO ideal for both simulated and physical testing environments.
 
-The use of Agilex LIMO robots ensured a balance of flexibility, performance, and ease of programming, making them an indispensable part of the ROBO-QUEST system.
+The use of Agilex LIMO robots ensured a balance of flexibility, performance, and ease of programming, making them an indispensable part of the AETHER system.
 
 ---
 
@@ -225,7 +225,7 @@ Simulation is a critical aspect of the project, allowing robust testing without 
 ---
 
 ## Contributors
-- **Ely Cheikh Abyss**
+- **Ely Cheikh Abass**
 - **Omar Benzekri**
 - **Abdul-Wahab Chaarani**
 - **Loïc Nguemegne**
